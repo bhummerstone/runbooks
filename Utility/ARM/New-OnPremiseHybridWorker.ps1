@@ -1,6 +1,6 @@
 ﻿<#PSScriptInfo 
 
-.VERSION 1.6
+.VERSION 1.7
 
 .GUID b6ad1d8e-263a-46d6-882b-71592d6e166d 
 
@@ -25,6 +25,10 @@
 .EXTERNALSCRIPTDEPENDENCIES 
 
 .RELEASENOTES 
+
+1.7 - 08/03/2020
+ -- MODIFIED BY Ben Hummerstone
+ -- Updated to install Az module, using AzureRM aliases
 
 1.6 - 11/15/2018
  -- MODIFIED BY Alexander Zabielski
@@ -136,9 +140,9 @@
 
     AUTHOR: Jenny Hunter, Azure Automation Team
 
-    LASTEDIT: May 29, 2018
+    LASTEDIT: August 3rd, 2020
 
-    EDITBY: Jenny Hunter
+    EDITBY: Ben Hummerstone
 
 #>
 
@@ -184,7 +188,7 @@ $ErrorActionPreference = "Stop"
 Write-Output "Importing necessary modules..."
 
 # Create a list of the modules necessary to register a hybrid worker
-$AzureRmModule = @{"Name" = "AzureRM"; "Version" = ""}
+$AzureRmModule = @{"Name" = "Az"; "Version" = ""}
 $Modules = @($AzureRmModule)
 
 # Import modules
@@ -216,6 +220,9 @@ foreach ($Module in $Modules) {
         Write-Output "     Required version $ModuleVersion of $ModuleName is installed..."
     }
 }
+
+# Enable aliases for Azure RM commands
+Enable-AzureRmAlias
 
 # Connect to the current Azure account
 Write-Output "Pulling Azure account credentials..."
