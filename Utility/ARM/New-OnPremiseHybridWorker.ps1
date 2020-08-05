@@ -26,7 +26,7 @@
 
 .RELEASENOTES 
 
-1.7 - 08/03/2020
+1.7 - 08/05/2020
  -- MODIFIED BY Ben Hummerstone
  -- Updated to install Az module, using AzureRM aliases
 
@@ -140,7 +140,7 @@
 
     AUTHOR: Jenny Hunter, Azure Automation Team
 
-    LASTEDIT: August 3rd, 2020
+    LASTEDIT: August 5th, 2020
 
     EDITBY: Ben Hummerstone
 
@@ -213,16 +213,18 @@ foreach ($Module in $Modules) {
 
     if (!$CurrentModule) {
 
-        $null = Install-Module -Name $ModuleName -RequiredVersion $ModuleVersion -Force
+        $null = Install-Module -Name $ModuleName -RequiredVersion $ModuleVersion -Force -AllowClobber
         Write-Output "     Successfully installed version $ModuleVersion of $ModuleName..."
 
     } else {
         Write-Output "     Required version $ModuleVersion of $ModuleName is installed..."
     }
+
+    Get-Module $Module.Name* -ListAvailable | Import-Module
 }
 
 # Enable aliases for Azure RM commands
-Enable-AzureRmAlias
+Enable-AzureRmAlias -Scope LocalMachine
 
 # Connect to the current Azure account
 Write-Output "Pulling Azure account credentials..."
