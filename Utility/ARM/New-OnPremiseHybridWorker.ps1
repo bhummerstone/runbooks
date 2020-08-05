@@ -220,7 +220,7 @@ foreach ($Module in $Modules) {
         Write-Output "     Required version $ModuleVersion of $ModuleName is installed..."
     }
 
-    Get-Module $Module.Name* -ListAvailable | Import-Module
+    Get-Module ($Module.Name + "*") -ListAvailable | Import-Module
 }
 
 # Enable aliases for Azure RM commands
