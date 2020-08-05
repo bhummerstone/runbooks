@@ -191,6 +191,12 @@ Write-Output "Importing necessary modules..."
 $AzureRmModule = @{"Name" = "Az"; "Version" = ""}
 $Modules = @($AzureRmModule)
 
+# Remove AzureRM modules, if present
+$AzureRMModules = Get-Module -Name "AzureRM*" -ListAvailable
+foreach ($ARMModule in $AzureRMModules) {
+    Uninstall-Module $ARMModule.Name -AllVersions -Force
+}
+
 # Import modules
 foreach ($Module in $Modules) {
 
